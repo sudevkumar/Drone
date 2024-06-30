@@ -4,11 +4,16 @@ import { IoCartOutline } from "react-icons/io5";
 import { FaAngleDown } from "react-icons/fa";
 import ResponiveNavBarr from "./ResponiveNavBarr";
 import { useDarkContext } from "../../context/DardMode";
+import ShowLanding from "./ShowLanding";
+import ShowPages from "./ShowPages";
+import ShowAccount from "./ShowAccount";
 
 const Navbar = () => {
   const [on, setOn] = useState(false);
   const [showNavbar, setShowNavbar] = useState(false);
   const { setDark, dark } = useDarkContext();
+  const [showDropDown, setShowDropDown] = useState(false);
+  const [nameDropDown, setNameDropDown] = useState("");
   const changeNavbarColor = () => {
     if (window.pageYOffset >= 540) {
       setShowNavbar(true);
@@ -26,7 +31,7 @@ const Navbar = () => {
           showNavbar ? "fixed w-full z-40" : " relative"
         }`}
       >
-        <div className=" w-[55%] h-full flex text-white items-center justify-center gap-3">
+        <div className=" w-[55%] h-full flex text-white items-center justify-center gap-6">
           <div className=" flex gap-2 h-full items-center cursor-pointer">
             <img
               src="https://silicon.createx.studio/assets/img/logo.svg"
@@ -35,19 +40,46 @@ const Navbar = () => {
             />
             <h1 className=" text-xl font-semibold">Silicon</h1>
           </div>
-          <div className=" flex h-full items-center gap-1 cursor-pointer hover:text-[#6466f1]">
+          <div
+            className=" relative flex h-full items-center gap-1 cursor-pointer hover:text-[#6466f1]"
+            onMouseEnter={() => {
+              setShowDropDown(true);
+              setNameDropDown("landing");
+            }}
+          >
             <p className=" text-[14px]">Landings</p>
             <FaAngleDown size={10} />
+            {showDropDown && nameDropDown === "landing" && (
+              <ShowLanding setShowDropDown={setShowDropDown} />
+            )}
           </div>
 
-          <div className=" flex h-full items-center gap-1 cursor-pointer hover:text-[#6466f1]">
+          <div
+            className=" relative flex h-full items-center gap-1 cursor-pointer hover:text-[#6466f1]"
+            onMouseEnter={() => {
+              setShowDropDown(true);
+              setNameDropDown("page");
+            }}
+          >
             <p className=" text-[14px]">Pages</p>
             <FaAngleDown size={10} />
+            {showDropDown && nameDropDown === "page" && (
+              <ShowPages setShowDropDown={setShowDropDown} />
+            )}
           </div>
 
-          <div className=" flex h-full items-center gap-1 cursor-pointer hover:text-[#6466f1]">
+          <div
+            className=" relative flex h-full items-center gap-1 cursor-pointer hover:text-[#6466f1]"
+            onMouseEnter={() => {
+              setShowDropDown(true);
+              setNameDropDown("acc");
+            }}
+          >
             <p className=" text-[14px]">Account</p>
             <FaAngleDown size={10} />
+            {showDropDown && nameDropDown === "acc" && (
+              <ShowAccount setShowDropDown={setShowDropDown} />
+            )}
           </div>
 
           <div className=" flex h-full items-center gap-1 cursor-pointer hover:text-[#6466f1]">
@@ -89,6 +121,10 @@ const Navbar = () => {
         </div>
       </div>
       <ResponiveNavBarr />
+
+      {/* {showDropDown && nameDropDown === "landing" && (
+        <ShowLanding setShowDropDown={setShowDropDown} />
+      )} */}
     </>
   );
 };
